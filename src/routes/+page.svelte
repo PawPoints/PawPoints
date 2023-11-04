@@ -11,6 +11,7 @@
     import mapboxgl from 'mapbox-gl';
 	import FoundCat from '$lib/views/FoundCat.svelte';
 
+    let displayTrackedCats = true;
     // let map: mapboxgl.Map;
     
     onMount(async() => {
@@ -52,12 +53,45 @@
 
 <div>
   <div id="mapcontainer"></div>
-  <div class="menu" style="">
-    <FoundCat/>
+  <div class="sidebar" style="gap: 10px;">
+    <center>
+      <div class="mapbox-directions-profile mapbox-directions-component-keyline mapbox-directions-clearfix">
+        <input id="mapbox-directions-profile-driving-traffic" type="radio" name="profile" value="mapbox/driving-traffic" checked="true">
+        <label for="mapbox-directions-profile-driving-traffic" style="width: 8.65vw;" on:click={() => displayTrackedCats = true}>Tracked Cats</label>
+        <input id="mapbox-directions-profile-cycling" type="radio" name="profile" value="mapbox/cycling">
+        <label for="mapbox-directions-profile-cycling" style="width: 8.65vw;" on:click={() => displayTrackedCats = false}>Found a Cat?</label>
+      </div>
+    </center>
+    <br>
+    <div class="sidesection">
+        {#if displayTrackedCats}
+            <center>
+                <h2>Cats We FEED</h2>
+                <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Time Since Last Fed</th>
+                </tr>
+                <tr>
+                    <td>Emma</td>
+                    <td><b>15 hours</b></td>
+                </tr>
+                </table>
+            </center>
+        {:else}
+            <FoundCat/>
+        {/if}
+    </div>
   </div>
 </div>
 
 <style>
+
+.sidebar {
+    margin: 1vw;
+    position: relative;
+    width: 19vw;
+}
   #mapcontainer { 
     position: absolute;
     top: 0;
@@ -75,5 +109,12 @@
 
   .ml-icon {
     color: var(--accent500);
+  }
+
+  .sidesection {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
   }
 </style>
