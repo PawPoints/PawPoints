@@ -6,8 +6,7 @@
 
 	const dispatch = createEventDispatcher()
 
-	let imageUrl: string | ArrayBuffer | null | undefined =
-		'https://files.oaiusercontent.com/file-WKaExy4PcokyrrwXL1Wx9IHH?se=2023-11-04T21%3A42%3A16Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dc11770d5-65c0-409a-8765-306c23ce2cf8.webp&sig=do3C9IuurrUvBDa4hcLbexySa/gaVXt0COQGlUBs8lk%3D'
+	let imageUrl: string | ArrayBuffer | null | undefined = '/no_cat_photo.png'
 
 	function handleFileChange(event: Event) {
 		const input = event.target as HTMLInputElement
