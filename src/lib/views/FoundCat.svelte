@@ -34,9 +34,7 @@
 			<img src={imageUrl} alt="" />
 			<input type="file" id="file-upload" on:change={handleFileChange} class="image-upload" />
 			<label for="file-upload">
-				<div
-					class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none"
-				>
+				<div class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none">
 					<PlusOutline class=" text-gray-100" size="lg" />
 				</div>
 			</label>
@@ -61,30 +59,32 @@
 					type="text"
 				/>
 			</div>
-			<button>Add Cat</button>
+			<button class="button">Add Cat</button>
 		</div>
-		<!-- <form class="cat-props flex flex-col gap-2" action="/submit-cat" method="post">
-            <div class="cat-prop gap-1">
-              <label class="m-0">Breed
-                <input name="breed" placeholder="Siamese" class="m-0 p-0 border-r-0 border-l-0 border-t-0" type="text">
-              </label>
-            </div>
-            <div class="cat-prop gap-1">
-              <label class="m-0">Description
-                <textarea name="description" placeholder="A nice cat description" class="border-r-0 border-l-0 border-t-0"></textarea>
-              </label>
-            </div>
-            <div class="cat-prop gap-1">
-              <label class="m-0">Location
-                <input name="location" placeholder="1234 Main St" class="m-0 p-0 border-r-0 border-l-0 border-t-0" type="text">
-              </label>
-            </div>
-            <button type="submit">Add Cat</button>
-        </form>           -->
 	</div>
 </div>
 
 <style>
+    /* Base style for the button */
+    .button {
+        background-color: #2F4858; /* Main color for the button */
+        border: none;
+        border-radius: 4px;
+        color: white; /* Text color */
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s; /* Smooth transition for hover effect */
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: #456578; /* Lighter shade for hover state */
+    }
+
 	.plus-button {
 		background-color: rgba(100, 100, 100, 0.8);
 		transition: background-color 0.2s ease-in-out;
@@ -123,11 +123,6 @@
 		font-family: 'Roboto', sans-serif;
 	}
 
-	.cat-prop {
-		display: flex;
-		font-size: 20px;
-	}
-
 	img {
 		width: 100%;
 		aspect-ratio: 1 / 1; /* Make the width and height equal */
@@ -143,6 +138,7 @@
 	input:focus,
 	textarea:focus {
 		outline: none;
+        border-color: #83BD85;
 	}
 
 	textarea {
