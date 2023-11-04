@@ -132,7 +132,7 @@
 		width: 100%;
 		aspect-ratio: 1 / 1; /* Make the width and height equal */
 		border-radius: 10px; /* Rounded corners */
-		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Slight drop shadow */
+		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1); /* Slight drop shadow */
 		object-fit: cover; /* This will cover the area of the box without stretching the image */
 	}
 
