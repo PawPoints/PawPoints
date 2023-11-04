@@ -40,6 +40,12 @@
 		</div>
 		<div class="cat-form">
 			<div class="cat-props">
+                <p class="m-0">Name</p>
+				<input
+					placeholder="Ol' Johnny"
+					class="m-0 p-0 border-r-0 border-l-0 border-t-0"
+					type="text"
+				/>
 				<p class="m-0">Breed</p>
 				<input
 					placeholder="Siamese"
