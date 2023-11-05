@@ -57,13 +57,27 @@
 		return rtf.format(-Math.floor(yearsPast), 'year')
 	}
 
-	function showFeedModal(cat: Cat) {
+	function showFeedModal(i: string) {
 		document.getElementById('cat-modal').style.display='block';
+		document.getElementById('cat-uuid').value = i;
 	}
 
-	function feed(cat: Cat) {
-		setCat(cat, 'lastFed', new Date())
-		console.log("FEEDING")
+	export function feed() {
+		let i = document.getElementById('cat-uuid').value;
+		let catIndex = 0;
+		for (var j = 0; j < cats.length; j++) {
+			if (cats[j].firebaseDocId == i) {
+				catIndex = j;
+			}
+		}
+		let cat = cats[catIndex];
+
+		let no_checkbox = document.getElementById('no_checkbox');
+
+		if (!no_checkbox.checked) {
+			setCat(cat, 'lastFed', new Date())
+		}
+		console.log('FEED')
 		cats = [...cats]
 		currentlyOnDisplay = [...currentlyOnDisplay]
 		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
@@ -74,6 +88,7 @@
 			updatePawPoints($pawUser.pawPoints, $user.uid)
 			makeConfettiBurst()
 		}
+		document.getElementById('cat-modal').style.display='none';
 	}
 
 	const makeConfettiBurst = async () => {
@@ -144,7 +159,8 @@
 				<p class={"text-xs " + computerColor(cat.lastFed)}>{timeSince(cat.lastFed)}</p>
 				{#if $user}
 					<button
-					on:click={() => showFeedModal(cat)}
+					disabled={(Date.now() - cat.lastFed.getTime()) / 1000 / 60 / 60 < 2}
+					on:click={() => showFeedModal(cat.firebaseDocId)}
 					class="plus-button"
 					>
 						<CheckOutline />
@@ -173,6 +189,7 @@
 	@media(max-width: 500px) {
 		.cats {
 			max-height: 33vh;
+			overflow: scroll;
 		}
 	}
 
@@ -213,5 +230,10 @@
 		width: fit-content;
 		word-break: break-word;
 		border: 0;
+	}
+
+	button:disabled {
+		background-color: gray;
+		opacity: 0.5;
 	}
 </style>

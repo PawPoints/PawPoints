@@ -18,6 +18,7 @@
 	let showFeedModalBool = false
 
 	let foundCat: FoundCat
+	let catTracker: TrackCats
 
 	let clickMarker
 	let map
@@ -195,7 +196,7 @@
 		<br />
 		<div class="sidesection bg-opacity-60 bg-white">
 			{#if displayTrackedCats}
-				<TrackCats bind:map />
+				<TrackCats bind:this={catTracker} bind:map />
 			{:else}
 				<FoundCat bind:this={foundCat} />
 			{/if}
@@ -256,7 +257,7 @@
 	</div>
 
 	<div class="modal s-y_bCXRrkrYfP" id="cat-modal" style="display: none;">
-		<div class="modal-content s-y_bCXRrkrYfP" style="width: 25vw;">
+		<div class="modal-content s-y_bCXRrkrYfP" style="width: min(85vw, 600px);">
 			<div class="modal-container s-y_bCXRrkrYfP">
 				<span onclick="document.getElementById('cat-modal').style.display='none'" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-1f0ggbm">×</span> <br class="s-y_bCXRrkrYfP"> 
 				<h2 class="s-y_bCXRrkrYfP">
@@ -264,6 +265,7 @@
 				</h2>
 				<br class="s-y_bCXRrkrYfP"> 
 				<center class="s-y_bCXRrkrYfP">
+				   <input id="cat-uuid" type="hidden" />
 				   <p class="s-y_bCXRrkrYfP"><i class="s-y_bCXRrkrYfP">Post a photo of your filled<br class="s-y_bCXRrkrYfP">foodbowl for confirmation:</i><br class="s-y_bCXRrkrYfP"><br class="s-y_bCXRrkrYfP"></p>
 				   <div class="cat-image relative s-y_bCXRrkrYfP">
 						<input type="file" id="myFile" name="filename" class="s-y_bCXRrkrYfP" style="padding-left: 5.5vw;">
@@ -272,9 +274,13 @@
 				   <p class="s-y_bCXRrkrYfP"><i class="s-y_bCXRrkrYfP" data-svelte-h="svelte-ko83zt">Did the cat eat the food from last time?</i><br class="s-y_bCXRrkrYfP"><br class="s-y_bCXRrkrYfP"></p>
 				   <input type="checkbox" id="yes" name="yes" class="s-y_bCXRrkrYfP" value="Yes">
 				   <label for="yes" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-1vgb7r8">Yes &nbsp;</label>
-				   <input type="checkbox" id="no" name="no" class="s-y_bCXRrkrYfP" value="No">
+				   <input type="checkbox" id="no_checkbox" name="no" class="s-y_bCXRrkrYfP" value="No">
 				   <label for="no" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-13wa16g">No</label>
-				   <button onclick="feed()"></button>
+				   <br><br>
+				   <input type="submit"
+				   		  value="Submit"
+					      on:click={() => catTracker.feed()}
+						  style="background-color: rgb(52, 71, 86); border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;">
 				</center>
 				<br class="s-y_bCXRrkrYfP">
 			 </div>

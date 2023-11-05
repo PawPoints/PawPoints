@@ -181,6 +181,14 @@
 		left: calc(50% - 350px);
 	}
 
+	@media(max-width: 500px) {
+		.card {
+			width: 300px;
+			top: calc(50% - 200px);
+			left: calc(50% - 160px);
+		}
+	}
+
 	.upper {
 		height: 100px;
 	}
