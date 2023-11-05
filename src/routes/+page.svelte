@@ -255,52 +255,31 @@
 		</div>
 	</div>
 
-	<div class="modal" id="cat-modal" style="display: none;">
-		<div class="modal-content">
-			<div class="modal-container">
-				<span
-					onclick="document.getElementById('cat-modal').style.display='none'"
-					style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;"
-					>&times;</span
-				>
-				<br />
-				<h3><center>How to Use</center></h3>
-				<br />
-				<p>
-					Welcome to our web page! This platform is designed to help you locate stray cats
-					in your area. Here's how it works:
-				</p>
-				<br />
-				<p>
-					1. Feeding and Earning PawPoints: Whenever you feed a stray cat and provide
-					photo evidence, you'll earn PawPoints.
-				</p>
-				<br />
-				<p>
-					2. Sidebar Sections: On the left side of the page, you'll find two main
-					sections:
-				</p>
-				<br />
-				<p>
-					a. Tracked Cats: In this section, you can view the locations of all the cats
-					that have been tracked.
-				</p>
-				<br />
-				<p>
-					b. Found a Cat?: If you come across a new stray cat, you can use this section to
-					report it. Simply upload a picture of the cat, provide a name, and describe its
-					appearance or any unique habits you've observed. After that, just click on the
-					map to pinpoint the cat's location, and click the "Add Cat" button to submit the
-					cat's information.
-				</p>
-				<br />
-				<p>
-					We hope you find this page helpful in your mission to care for stray cats and
-					make a positive impact!
-				</p>
-			</div>
+	<div class="modal s-y_bCXRrkrYfP" id="cat-modal" style="display: none;">
+		<div class="modal-content s-y_bCXRrkrYfP" style="width: 25vw;">
+			<div class="modal-container s-y_bCXRrkrYfP">
+				<span onclick="document.getElementById('cat-modal').style.display='none'" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-1f0ggbm">×</span> <br class="s-y_bCXRrkrYfP"> 
+				<h2 class="s-y_bCXRrkrYfP">
+				   <center class="s-y_bCXRrkrYfP"><b class="s-y_bCXRrkrYfP" data-svelte-h="svelte-l4ws2n">Update Food Bowl</b></center>
+				</h2>
+				<br class="s-y_bCXRrkrYfP"> 
+				<center class="s-y_bCXRrkrYfP">
+				   <p class="s-y_bCXRrkrYfP"><i class="s-y_bCXRrkrYfP">Post a photo of your filled<br class="s-y_bCXRrkrYfP">foodbowl for confirmation:</i><br class="s-y_bCXRrkrYfP"><br class="s-y_bCXRrkrYfP"></p>
+				   <div class="cat-image relative s-y_bCXRrkrYfP">
+						<input type="file" id="myFile" name="filename" class="s-y_bCXRrkrYfP" style="padding-left: 5.5vw;">
+					</div>
+				   <br class="s-y_bCXRrkrYfP"><br class="s-y_bCXRrkrYfP"> 
+				   <p class="s-y_bCXRrkrYfP"><i class="s-y_bCXRrkrYfP" data-svelte-h="svelte-ko83zt">Did the cat eat the food from last time?</i><br class="s-y_bCXRrkrYfP"><br class="s-y_bCXRrkrYfP"></p>
+				   <input type="checkbox" id="yes" name="yes" class="s-y_bCXRrkrYfP" value="Yes">
+				   <label for="yes" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-1vgb7r8">Yes &nbsp;</label>
+				   <input type="checkbox" id="no" name="no" class="s-y_bCXRrkrYfP" value="No">
+				   <label for="no" class="s-y_bCXRrkrYfP" data-svelte-h="svelte-13wa16g">No</label>
+				   <button onclick="feed()"></button>
+				</center>
+				<br class="s-y_bCXRrkrYfP">
+			 </div>
 		</div>
-	</div>
+	 </div>
 </div>
 
 <style>

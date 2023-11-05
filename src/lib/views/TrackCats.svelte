@@ -58,12 +58,12 @@
 	}
 
 	function showFeedModal(cat: Cat) {
-		showingModal = true;
-		modalCat = cat;
+		document.getElementById('cat-modal').style.display='block';
 	}
 
 	function feed(cat: Cat) {
 		setCat(cat, 'lastFed', new Date())
+		console.log("FEEDING")
 		cats = [...cats]
 		currentlyOnDisplay = [...currentlyOnDisplay]
 		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
@@ -144,7 +144,7 @@
 				<p class={"text-xs " + computerColor(cat.lastFed)}>{timeSince(cat.lastFed)}</p>
 				{#if $user}
 					<button
-					on:click={() => feed(cat)}
+					on:click={() => showFeedModal(cat)}
 					class="plus-button"
 					>
 						<CheckOutline />
