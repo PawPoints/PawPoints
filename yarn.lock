@@ -795,10 +795,22 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.4.tgz#d9748f5742171b26218516cf1828b8eafaf8a9fa"
   integrity sha512-2JwWnHK9H+wUZNorf2Zr6ves96WHoWDJIftkcxPKsS7Djta6Zu519LarhRNljPXkpsZR2ZMwNCPeW7omW07BJw==
 
+"@types/geojson@*":
+  version "7946.0.12"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.12.tgz#0307536218d32e6b970bccd1d148b9c4e5b6f10d"
+  integrity sha512-uK2z1ZHJyC0nQRbuovXFt4mzXDwf27vQeUWNhfKGwRcWW429GOhP8HxUHlM6TLH4bzmlv/HlEjpvJh3JfmGsAA==
+
 "@types/json-schema@^7.0.12":
   version "7.0.14"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.14.tgz#74a97a5573980802f32c8e47b663530ab3b6b7d1"
   integrity sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==
+
+"@types/mapbox-gl@^2.7.17":
+  version "2.7.17"
+  resolved "https://registry.yarnpkg.com/@types/mapbox-gl/-/mapbox-gl-2.7.17.tgz#cba3559ccd041b32d492d14d06c1f1fedba0a2cb"
+  integrity sha512-5lDO2W6glPCqiRuqKh0a7MPOwnVt1/KWcYnxsL3z5rmjuOcFdHEa+KzUwCzqsAlbAegIIhgQiREZzJ9o1ze1gQ==
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/node@>=12.12.47", "@types/node@>=13.7.0":
   version "20.8.10"
@@ -2443,6 +2455,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+svelte-canvas-confetti@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/svelte-canvas-confetti/-/svelte-canvas-confetti-0.6.0.tgz#13dc57d353e57aa867a1a61c4834ea0224569cd6"
+  integrity sha512-Q/jp48oVvwLCkuwQAQS6JJk1g4CGHRtXVrsESze/zsTzkhsn8NLM5GezwmEbXg9ok8tdMugpjpOiWMlNh5zSlw==
 
 svelte-check@^3.4.3:
   version "3.5.2"
