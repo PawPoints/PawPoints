@@ -2,6 +2,7 @@
 	import { UserOutline, MapPinAltSolid } from 'flowbite-svelte-icons'
 	import { login, user, pawUser } from '$lib/firebase'
 	import type { User } from 'firebase/auth'
+
 </script>
 
 <nav class="relative flex flex-row justify-between m-4 p-4 rounded-lg bg-white bg-opacity-80">

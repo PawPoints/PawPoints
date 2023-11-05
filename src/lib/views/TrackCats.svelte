@@ -70,8 +70,18 @@
 						  data-svelte-h="svelte-170515b">
 						×
 					</span>
-					<br>
-					<h3>Update Cat Entry</h3>
+					<h3><center>Update Cat Entry</center></h3>
+					<div class="cat-image relative" style="width: 100%;">
+						<img src={imageUrl} alt="" />
+						<input type="file" id="file-upload" on:change={handleFileChange} class="image-upload" />
+						<label for="file-upload">
+							<div
+								class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none"
+							>
+								<PlusOutline class=" text-gray-100" size="lg" />
+							</div>
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>`;
