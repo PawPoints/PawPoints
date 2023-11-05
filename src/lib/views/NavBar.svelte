@@ -5,7 +5,7 @@
 </script>
 
 <nav class="relative flex flex-row justify-between m-4 p-4 rounded-lg bg-white bg-opacity-80">
-	<div class="flex flex-row rounded-sm">
+	<div class="flex flex-row rounded-sm py-1">
 		<a
 			class="flex text-black text-center px-[14px] -m-2 items-center bg-[#9EE493] rounded-lg no-underline cursor-pointer"
 			href="/"
@@ -20,18 +20,22 @@
 					<span class="-m-2">PawP</span>
 					<span class="-m-2"><MapPinAltSolid /></span>
 				</div>
-				<span class="-m-4">ints</span> ✨
+				<span class="-m-4">ints</span>&nbsp;
 			</div>
+		</a>
+		<a>
 		</a>
 	</div>
 	{#if $user}
-		<div class="flex flex-row align-center justify-center items-center px-2 space-x-4">
+		<div
+			class="flex flex-row align-center justify-center items-center px-2 space-x-4 text-center mt-1"
+		>
 			{#if $pawUser}
 				<p class="animated-gradient-text font-extrabold text-center">
 					{$pawUser?.pawPoints} PawPoints ✨
 				</p>
 			{/if}
-			<p>Hi <b>{$user.displayName}</b></p>
+			<p class="user-name text-center">Hi <b>{$user.displayName}</b></p>
 			<a class="flex mx-4 select-none text-black px-2 text-center" href="/profile">
 				<img
 					src={$user
@@ -44,7 +48,9 @@
 			</a>
 		</div>
 	{:else}
-		<button on:click={login}> Login </button>
+		<button class="rounded-xl py-2 bg-[#9EE493] border-0 p-3 text-base hover-change" on:click={login}>
+			Login
+		</button>
 	{/if}
 </nav>
 
@@ -120,5 +126,37 @@
 
 	.user-photo:hover {
 		opacity: 0.8;
+	}
+
+	.hover-change{
+		transition-duration: .4s;
+	}
+
+	.hover-change:hover{
+		opacity: .8;
+		cursor: pointer;
+	}
+
+	@media(max-width: 500px) {
+		.user-name {
+			visibility: hidden;
+			width: 0px;
+		}
+	}
+
+	.modal {
+		z-index: 3; display: none; padding-top: 100px; position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	.modal-content {
+		margin: auto; background-color: #fff; position: relative; padding: 0; outline: 0; width: 600px;
+	}
+
+	.modal-container {
+		padding: 1em 16px; padding-bottom: 1.5em;
+	}
+
+	.modal-container:after, .modal-container:before {
+		
 	}
 </style>

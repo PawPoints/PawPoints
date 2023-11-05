@@ -1,16 +1,25 @@
 <script lang="ts">
 	import type { Cat } from '$lib/types/cat.d.ts'
-	import { getCats, setCat, pawUser, user, updatePawPoints } from '$lib/firebase'
+	import { getCats, setCat, pawUser, user, updatePawPoints, catAdded } from '$lib/firebase'
 	import { onMount } from 'svelte'
 	import { CheckOutline } from 'flowbite-svelte-icons'
 	// import type { CatLocation } from '$lib/types/cat_location.d.ts'
-	import { ConfettiBurst } from 'svelte-canvas-confetti';
-	import {tick} from 'svelte';
+	import { ConfettiBurst } from 'svelte-canvas-confetti'
+	import { tick } from 'svelte'
+
+	export let map = null
+
 	let cats: Cat[] = []
+	let currentlyOnDisplay: Cat[] = []
+	let currentlyDisplaying
 
 	onMount(() => {
 		getCats().then((data) => {
 			cats = data
+			currentlyOnDisplay = cats
+			currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
+				return b.lastFed.getTime() - a.lastFed.getTime()
+			})
 		})
 	})
 
@@ -49,41 +58,101 @@
 		return rtf.format(-Math.floor(yearsPast), 'year')
 	}
 
-	function fed(cat: Cat) {
-		setCat(cat, 'lastFed', new Date());
-		cats = [...cats];
+	function showFeedModal(cat: Cat) {
+		console.log('running showfeedmodal')
+		document.getElementById('cat-modal').outerHTML = `
+		<div class="modal s-y_bCXRrkrYfP" id="cat-modal" style="display: block;">
+			<div class="modal-content s-y_bCXRrkrYfP">
+				<div class="modal-container s-y_bCXRrkrYfP">
+					<span onclick="document.getElementById('cat-modal').style.display='none'"
+						  style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;"
+						  class="s-y_bCXRrkrYfP"
+						  data-svelte-h="svelte-170515b">
+						×
+					</span>
+					<br>
+					<h3>Update Cat Entry</h3>
+				</div>
+			</div>
+		</div>`;
+	}
+
+	function feed(cat: Cat) {
+		setCat(cat, 'lastFed', new Date())
+		cats = [...cats]
+		currentlyOnDisplay = [...currentlyOnDisplay]
 		if ($pawUser && $user) {
-			$pawUser.pawPoints += 20;
-			updatePawPoints($pawUser.pawPoints, $user.uid);
-			makeConfettiBurst();
+			$pawUser.pawPoints += 20
+			updatePawPoints($pawUser.pawPoints, $user.uid)
+			makeConfettiBurst()
 		}
 	}
 
 	const makeConfettiBurst = async () => {
-		confettiBurst = false;
-		await tick();
-		confettiBurst = true;
+		confettiBurst = false
+		await tick()
+		confettiBurst = true
 	}
 
-	let confettiBurst = false;
+	catAdded.push((cat) => {
+		cats = [...cats, cat]
+	})
+
+	function navigateToCat(cat: Cat) {
+		map.flyTo({
+			center: [cat.location.lng, cat.location.lat],
+			zoom: 15
+		})
+	}
+
+	let search = ''
+
+	function handleSearch(e: Event) {
+		currentlyOnDisplay = cats.filter((cat) => {
+			return cat.name.toLowerCase().includes(search.toLowerCase().trim())
+		})
+		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
+			return b.lastFed.getTime() - a.lastFed.getTime()
+		})
+		// cats = getCats().then((data) => {
+		// 	return data.filter((cat) => {
+		// 		return cat.name.toLowerCase().includes(search)
+		// 	})
+		// })
+	}
+
+	let confettiBurst = false
 </script>
 
 {#if confettiBurst}
-	<ConfettiBurst 
-		origin={[window.innerWidth * 0.81, 0]}
-	/>
+	<ConfettiBurst origin={[window.innerWidth * 0.81, 0]} />
 {/if}
 <div class="cats flex flex-col space-y-2">
-	{#each cats as cat}
+	<div>
+		<input
+		type="text"
+		on:keyup={handleSearch}
+		placeholder="Search cats"
+		class="w-fill rounded p-2 shadow-md bg-gray-100 border-transparent outline-none"
+		bind:value={search}
+		/>
+	</div>
+	{#each currentlyOnDisplay as cat}
 		<div class="cat flex flex-row justify-between">
-			<div class="flex flex-row items-center space-x-2">
+			<div
+				class="flex flex-row items-center space-x-2 cursor-pointer"
+				on:click={() => navigateToCat(cat)}
+			>
 				<img src={cat.image} alt="" />
 				<p>{cat.name}</p>
 			</div>
 			<div class="flex space-x-2">
 				<p class="text-xs text-yellow-600">{timeSince(cat.lastFed)}</p>
-				<button on:click={fed(cat)} class="bg-green-100 hover:bg-green-200 text-green-800 font-semiboldborder border-green-400 rounded">
-					<CheckOutline/>
+				<button
+					on:click={showFeedModal(cat)}
+					class="bg-green-100 hover:bg-green-200 text-green-800 font-semiboldborder border-green-400 rounded"
+				>
+					<CheckOutline />
 				</button>
 			</div>
 		</div>
@@ -91,10 +160,29 @@
 </div>
 
 <style>
+	.hideScroll::-webkit-scrollbar {
+		display: none;
+	}
+	.hidescroll {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+
 	.cat {
 		display: flex;
 		align-items: center;
 		gap: 5px;
+	}
+
+	.cats {
+		max-height: 65vh;
+		overflow: scroll;
+	}
+
+	@media(max-width: 500px) {
+		.cats {
+			max-height: 33vh;
+		}
 	}
 
 	img {

@@ -226,6 +226,12 @@
 		gap: 20px;
 	}
 
+	@media(max-width: 500px) {
+		.add-cat {
+			flex-direction: row;
+		}
+	}
+
 	* {
 		font-family: 'Roboto', sans-serif;
 	}

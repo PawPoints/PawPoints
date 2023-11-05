@@ -11,16 +11,46 @@
 	import TrackCats from '$lib/views/TrackCats.svelte'
 	import NavBar from '$lib/views/NavBar.svelte'
 	import CatPopup from '$lib/views/CatPopup.svelte'
+	import CatModal from '$lib/views/CatModal.svelte'
 	import type { User } from 'firebase/auth'
 
 	let displayTrackedCats = true
+	let showFeedModalBool = false
 
 	let foundCat: FoundCat
 
-	let clickMarker;
-	let map;
+	let clickMarker
+	let map
 
-	onMount(async () => {
+	let query = '(min-width: 500px)'
+	let mql
+	let mqlListener
+	let wasMounted
+	let matches = true
+
+	$: {
+		if (wasMounted) {
+			removeActiveListener()
+			addNewListener()
+		}
+	}
+
+	function addNewListener() {
+		mql = window.matchMedia(query)
+		mqlListener = (result) => (matches = result.matches)
+		mql.addEventListener('change', mqlListener)
+		matches = mql.matches
+	}
+
+	function removeActiveListener() {
+		if (mql && mqlListener) {
+			mql.removeEventListener('change', mqlListener)
+		}
+	}
+
+	onMount(() => {
+		wasMounted = true
+
 		mapboxgl.accessToken =
 			'pk.eyJ1IjoidHdpbmtsZWJ1bnoxMDciLCJhIjoiY2xoMmFoMWl2MWF5YjNzbXB2amc3NmdiaiJ9.TtL3czNMJqBCphmq2_arqg'
 
@@ -30,6 +60,16 @@
 			center: [-95.1266301248878, 44.05209890150269],
 			zoom: 4
 		})
+
+		// map.addControl(
+		// 	new mapboxgl.GeolocateControl({
+		// 			positionOptions: {
+		// 				enableHighAccuracy: true
+		// 			},
+		// 			trackUserLocation: true,
+		// 			showUserHeading: true
+		// 	})
+		// );
 
 		clickMarker = new mapboxgl.Marker({
 			color: '#FFFFFF'
@@ -44,8 +84,6 @@
 				clickMarker.setLngLat(e.lngLat).addTo(map)
 			}
 		})
-
-		
 
 		let userLocation: mapboxgl.LngLatLike
 
@@ -69,9 +107,13 @@
 
 		getCats().then((data) => {
 			for (let i = 0; i < data.length; i++) {
-				addCatMarker(data[i]);
+				addCatMarker(data[i])
 			}
 		})
+
+		return () => {
+			removeActiveListener()
+		}
 	})
 
 	function addCatMarker(cat: Cat) {
@@ -94,12 +136,12 @@
 	}
 
 	catAdded.push((cat) => {
-		addCatMarker(cat);
-	});
+		addCatMarker(cat)
+	})
 
 	function updateDispalyTrackedCats(display: boolean) {
 		if (display && clickMarker) {
-			clickMarker.remove();
+			clickMarker.remove()
 		}
 		displayTrackedCats = display
 	}
@@ -134,7 +176,7 @@
 				/>
 				<label
 					for="mapbox-directions-profile-driving-traffic"
-					style="width: 10.65vw;"
+					style={matches ? `width: 10.65vw;` : `width: 42vw`}
 					on:click={() => updateDispalyTrackedCats(true)}>Tracked Cats</label
 				>
 				<input
@@ -145,7 +187,7 @@
 				/>
 				<label
 					for="mapbox-directions-profile-cycling"
-					style="width: 10.65vw;"
+					style={matches ? `width: 10.65vw;` : `width: 42vw`}
 					on:click={() => updateDispalyTrackedCats(false)}>Found a Cat?</label
 				>
 			</div>
@@ -153,42 +195,118 @@
 		<br />
 		<div class="sidesection">
 			{#if displayTrackedCats}
-				<TrackCats />
+				<TrackCats bind:map />
 			{:else}
 				<FoundCat bind:this={foundCat} />
 			{/if}
 		</div>
 	</div>
 
-
-	<div class="questionmark" onclick='document.getElementById("modal").style.display="block";'>
+	<div class="questionmark" onclick="document.getElementById('modal').style.display='block';">
 		<center>
 			<QuestionCircleSolid class="w-13 h-13" />
 		</center>
 	</div>
 
-	<div id="modal">
-		<div id="modal-content">
-			<div id="modal-container">
-				<span onclick="document.getElementById('modal').style.display='none'"
-				style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;">&times;</span>
-				<br>
+	<div class="modal" id="modal">
+		<div class="modal-content">
+			<div class="modal-container">
+				<span
+					onclick="document.getElementById('modal').style.display='none'"
+					style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;"
+					>&times;</span
+				>
+				<br />
 				<h3><center>How to Use</center></h3>
-				<br>
-				<p>FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK</p>
-				<br>
-				<p>FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK FUCK FUCK FUCK FUCKITY FUCK FUCK FUCK FUCK ITS 3AM KILL ME NOW BITCHHHHHHHHH</p>
-				<br>
+				<br />
+				<p>
+					Welcome to our web page! This platform is designed to help you locate stray cats
+					in your area. Here's how it works:
+				</p>
+				<br />
+				<p>
+					1. Feeding and Earning PawPoints: Whenever you feed a stray cat and provide
+					photo evidence, you'll earn PawPoints.
+				</p>
+				<br />
+				<p>
+					2. Sidebar Sections: On the left side of the page, you'll find two main
+					sections:
+				</p>
+				<br />
+				<p>
+					a. Tracked Cats: In this section, you can view the locations of all the cats
+					that have been tracked.
+				</p>
+				<br />
+				<p>
+					b. Found a Cat?: If you come across a new stray cat, you can use this section to
+					report it. Simply upload a picture of the cat, provide a name, and describe its
+					appearance or any unique habits you've observed. After that, just click on the
+					map to pinpoint the cat's location, and click the "Add Cat" button to submit the
+					cat's information.
+				</p>
+				<br />
+				<p>
+					We hope you find this page helpful in your mission to care for stray cats and
+					make a positive impact!
+				</p>
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="modal" id="cat-modal" style="display: none;">
+		<div class="modal-content">
+			<div class="modal-container">
+				<span
+					onclick="document.getElementById('cat-modal').style.display='none'"
+					style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;"
+					>&times;</span
+				>
+				<br />
+				<h3><center>How to Use</center></h3>
+				<br />
+				<p>
+					Welcome to our web page! This platform is designed to help you locate stray cats
+					in your area. Here's how it works:
+				</p>
+				<br />
+				<p>
+					1. Feeding and Earning PawPoints: Whenever you feed a stray cat and provide
+					photo evidence, you'll earn PawPoints.
+				</p>
+				<br />
+				<p>
+					2. Sidebar Sections: On the left side of the page, you'll find two main
+					sections:
+				</p>
+				<br />
+				<p>
+					a. Tracked Cats: In this section, you can view the locations of all the cats
+					that have been tracked.
+				</p>
+				<br />
+				<p>
+					b. Found a Cat?: If you come across a new stray cat, you can use this section to
+					report it. Simply upload a picture of the cat, provide a name, and describe its
+					appearance or any unique habits you've observed. After that, just click on the
+					map to pinpoint the cat's location, and click the "Add Cat" button to submit the
+					cat's information.
+				</p>
+				<br />
+				<p>
+					We hope you find this page helpful in your mission to care for stray cats and
+					make a positive impact!
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
 	:global(.marker) {
 		width: 50px;
-		height: 50px;
+		aspect-ratio: 1;
 		border-radius: 50%;
 		background-size: 100%;
 		background-repeat: no-repeat;
@@ -201,6 +319,14 @@
 		width: 24vw;
 	}
 
+	@media (max-width: 500px) {
+		.sidebar {
+			width: 98vw;
+			top: 40vh;
+			max-height: 100px !important;
+		}
+	}
+
 	.questionmark {
 		float: right;
 		background-color: rgba(255, 255, 255, 0.5);
@@ -210,6 +336,12 @@
 		right: 1vh;
 		position: absolute;
 		border-radius: 50%;
+		transition-duration: 0.4s;
+	}
+
+	.questionmark:hover {
+		background-color: rgba(255, 255, 255, 1);
+		cursor: pointer;
 	}
 
 	#mapcontainer {
@@ -234,19 +366,37 @@
 		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
 	}
 
-	#modal {
-		z-index:3;display:none;padding-top:100px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.4);
+	.modal {
+		z-index: 3;
+		display: none;
+		padding-top: 100px;
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0, 0, 0, 0.4);
 	}
 
-	#modal-content {
-		margin:auto;background-color:#fff;position:relative;padding:0;outline:0;width:600px;
+	.modal-content {
+		margin: auto;
+		background-color: #fff;
+		position: relative;
+		padding: 0;
+		outline: 0;
+		width: 600px;
 	}
 
-	#modal-container {
-		padding:0.01em 16px;
+	.modal-container {
+		padding: 1em 16px;
+		padding-bottom: 1.5em;
 	}
 
-	#modal-container:after, #modal-container:before {
-		content:"";display:table;clear:both
+	.modal-container:after,
+	.modal-container:before {
+		content: '';
+		display: table;
+		clear: both;
 	}
 </style>

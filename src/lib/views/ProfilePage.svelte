@@ -35,10 +35,11 @@
 	<div class="container d-flex justify-content-center align-items-center">
 		<div class="card">
 			<div class="upper">
-				<img 
-				src="http://images2.fanpop.com/images/photos/5100000/Cats-wallpaper-cats-5194935-1280-1024.jpg" 
-				alt="" class="img-fluid"
-				style="width: 100%; height: 100%; object-fit: cover;" 
+				<img
+					src="http://images2.fanpop.com/images/photos/5100000/Cats-wallpaper-cats-5194935-1280-1024.jpg"
+					alt=""
+					class="img-fluid"
+					style="width: 100%; height: 100%; object-fit: cover;"
 				/>
 			</div>
 			<div class="user text-center">
@@ -95,6 +96,11 @@
 				{:else}
 					<input on:click={login} type="submit" value="Login" class="log-out-button" />
 				{/if}
+
+				<!-- Back to map -->
+				<div class="flex flex-col gap-y-4 mt-4">
+					<a href="/" class="text-underline">Back to Map</a>
+				</div>
 			</div>
 		</div>
 	</div>
