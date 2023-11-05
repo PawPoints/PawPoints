@@ -71,17 +71,17 @@
 						×
 					</span>
 					<h3><center>Update Cat Entry</center></h3>
-					<div class="cat-image relative" style="width: 100%;">
-						<img src={imageUrl} alt="" />
-						<input type="file" id="file-upload" on:change={handleFileChange} class="image-upload" />
-						<label for="file-upload">
-							<div
-								class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none"
-							>
-								<PlusOutline class=" text-gray-100" size="lg" />
-							</div>
-						</label>
-					</div>
+					<div class="cat-image relative s-Yk8QVQxv_yuS">
+					<img src="/no_cat_photo.png" alt="" class="s-Yk8QVQxv_yuS" />
+					<input type="file" id="file-upload" class="image-upload s-Yk8QVQxv_yuS"> 
+					<label for="file-upload" class="s-Yk8QVQxv_yuS">
+						<div class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none s-Yk8QVQxv_yuS">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="shrink-0 w-2 h-2 text-gray-100" role="img" aria-label="plus outline" viewBox="0 0 18 18">
+								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"></path>
+							</svg>
+						</div>
+					</label>
+					<
 				</div>
 			</div>
 		</div>`;
