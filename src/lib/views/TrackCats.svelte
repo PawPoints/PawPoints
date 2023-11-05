@@ -11,7 +11,6 @@
 
 	let cats: Cat[] = []
 	let currentlyOnDisplay: Cat[] = []
-	let currentlyDisplaying
 
 	onMount(() => {
 		getCats().then((data) => {
@@ -59,32 +58,8 @@
 	}
 
 	function showFeedModal(cat: Cat) {
-		console.log('running showfeedmodal')
-		document.getElementById('cat-modal').outerHTML = `
-		<div class="modal s-y_bCXRrkrYfP" id="cat-modal" style="display: block;">
-			<div class="modal-content s-y_bCXRrkrYfP">
-				<div class="modal-container s-y_bCXRrkrYfP">
-					<span onclick="document.getElementById('cat-modal').style.display='none'"
-						  style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap; position:absolute;right:0;top:0;"
-						  class="s-y_bCXRrkrYfP"
-						  data-svelte-h="svelte-170515b">
-						×
-					</span>
-					<h3><center>Update Cat Entry</center></h3>
-					<div class="cat-image relative s-Yk8QVQxv_yuS">
-					<img src="/no_cat_photo.png" alt="" class="s-Yk8QVQxv_yuS" />
-					<input type="file" id="file-upload" class="image-upload s-Yk8QVQxv_yuS"> 
-					<label for="file-upload" class="s-Yk8QVQxv_yuS">
-						<div class="plus-button absolute right-2 bottom-3 bg-transparent outline-none border-none s-Yk8QVQxv_yuS">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="shrink-0 w-2 h-2 text-gray-100" role="img" aria-label="plus outline" viewBox="0 0 18 18">
-								<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"></path>
-							</svg>
-						</div>
-					</label>
-					<
-				</div>
-			</div>
-		</div>`;
+		showingModal = true;
+		modalCat = cat;
 	}
 
 	function feed(cat: Cat) {
@@ -124,7 +99,7 @@
 		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
 			return b.lastFed.getTime() - a.lastFed.getTime()
 		})
-		// cats = getCats().then((data) => {
+		// cats = getCats()	.then((data) => {
 		// 	return data.filter((cat) => {
 		// 		return cat.name.toLowerCase().includes(search)
 		// 	})
@@ -159,7 +134,7 @@
 			<div class="flex space-x-2">
 				<p class="text-xs text-yellow-600">{timeSince(cat.lastFed)}</p>
 				<button
-					on:click={showFeedModal(cat)}
+					on:click={() => feed(cat)}
 					class="bg-green-100 hover:bg-green-200 text-green-800 font-semiboldborder border-green-400 rounded"
 				>
 					<CheckOutline />
