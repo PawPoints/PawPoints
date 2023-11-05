@@ -149,10 +149,24 @@
 		position: absolute;
 		width: 100vw;
 		height: 100vh;
-		background-color: #2f4858;
+		background: linear-gradient(-45deg, #ee7752, #23a6d5, #23d5ab);
+		background-size: 400% 400%;
+		animation: gradient 10s ease infinite;
 		font-family: 'Poppins', sans-serif;
 		font-weight: 300;
 	}
+
+	@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
 
 	.card {
 		width: 700px;

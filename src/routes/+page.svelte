@@ -193,7 +193,7 @@
 			</div>
 		</center>
 		<br />
-		<div class="sidesection">
+		<div class="sidesection bg-opacity-60 bg-white">
 			{#if displayTrackedCats}
 				<TrackCats bind:map />
 			{:else}
@@ -360,10 +360,10 @@
 	}
 
 	.sidesection {
-		background-color: white;
 		padding: 15px;
 		border-radius: 10px;
-		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 	}
 
 	.modal {

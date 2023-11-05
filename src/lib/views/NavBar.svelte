@@ -5,10 +5,10 @@
 
 </script>
 
-<nav class="relative flex flex-row justify-between m-4 p-4 rounded-lg bg-white bg-opacity-80">
+<nav class="nav-bar relative flex flex-row justify-between m-4 p-4 rounded-lg bg-white bg-opacity-60">
 	<div class="flex flex-row rounded-sm py-1">
 		<a
-			class="flex text-black text-center px-[14px] -m-2 items-center bg-[#9EE493] rounded-lg no-underline cursor-pointer"
+			class="flex text-white text-center px-[14px] -m-2 items-center bg-[#2F4858] rounded-lg no-underline cursor-pointer"
 			href="/"
 		>
 			<div class="flex flex-row gap-x-4 items-center text-center m-auto">
@@ -102,6 +102,10 @@
 		100% {
 			background-position: 0% 50%;
 		}
+	}
+
+	.nav-bar {
+		backdrop-filter: blur(10px);
 	}
 
 	.animated-gradient-text {

@@ -17,7 +17,7 @@
 			cats = data
 			currentlyOnDisplay = cats
 			currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
-				return b.lastFed.getTime() - a.lastFed.getTime()
+				return a.lastFed.getTime() - b.lastFed.getTime()
 			})
 		})
 	})
@@ -66,6 +66,9 @@
 		setCat(cat, 'lastFed', new Date())
 		cats = [...cats]
 		currentlyOnDisplay = [...currentlyOnDisplay]
+		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
+			return a.lastFed.getTime() - b.lastFed.getTime()
+		})
 		if ($pawUser && $user) {
 			$pawUser.pawPoints += 20
 			updatePawPoints($pawUser.pawPoints, $user.uid)
@@ -97,13 +100,19 @@
 			return cat.name.toLowerCase().includes(search.toLowerCase().trim())
 		})
 		currentlyOnDisplay = currentlyOnDisplay.sort((a, b) => {
-			return b.lastFed.getTime() - a.lastFed.getTime()
+			return a.lastFed.getTime() - b.lastFed.getTime()
 		})
 		// cats = getCats()	.then((data) => {
 		// 	return data.filter((cat) => {
 		// 		return cat.name.toLowerCase().includes(search)
 		// 	})
 		// })
+	}
+
+	function computerColor(date: Date) {
+		let hours = (Date.now() - date.getTime()) / 1000 / 60 / 60;
+		
+		return hours > 6 ? (hours > 12 ? "text-red-600" : "text-yellow-500") : "text-green-600";
 	}
 
 	let confettiBurst = false
@@ -118,7 +127,7 @@
 		type="text"
 		on:keyup={handleSearch}
 		placeholder="Search cats"
-		class="w-fill rounded p-2 shadow-md bg-gray-100 border-transparent outline-none"
+		class="rounded p-2 shadow-md bg-[#EDFBFE] border-transparent outline-none"
 		bind:value={search}
 		/>
 	</div>
@@ -131,28 +140,25 @@
 				<img src={cat.image} alt="" />
 				<p>{cat.name}</p>
 			</div>
-			<div class="flex space-x-2">
-				<p class="text-xs text-yellow-600">{timeSince(cat.lastFed)}</p>
-				<button
+			<div class="flex items-center space-x-2">
+				<p class={"text-xs " + computerColor(cat.lastFed)}>{timeSince(cat.lastFed)}</p>
+				{#if $user}
+					<button
 					on:click={() => feed(cat)}
-					class="bg-green-100 hover:bg-green-200 text-green-800 font-semiboldborder border-green-400 rounded"
-				>
-					<CheckOutline />
-				</button>
+					class="plus-button"
+					>
+						<CheckOutline />
+					</button>
+				{/if}
 			</div>
 		</div>
 	{/each}
 </div>
 
 <style>
-	.hideScroll::-webkit-scrollbar {
-		display: none;
+	:global(svg) {
+		outline: none;
 	}
-	.hidescroll {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
-	}
-
 	.cat {
 		display: flex;
 		align-items: center;
@@ -161,7 +167,7 @@
 
 	.cats {
 		max-height: 65vh;
-		overflow: scroll;
+		/* overflow: scroll; */
 	}
 
 	@media(max-width: 500px) {
@@ -170,10 +176,42 @@
 		}
 	}
 
+	.hideScroll::-webkit-scrollbar {
+		display: none;
+	}
+	.hidescroll {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+
 	img {
 		/* circular image */
 		border-radius: 50%;
 		width: 30px;
 		height: 30px;
+	}
+
+	input {
+		width: 90%;
+	}
+
+	.plus-button {
+		background: #83BD85;
+		border-radius: 10px;
+		box-shadow: #83bd85d0 0 10px 10px -10px;
+		box-sizing: border-box;
+		color: #FFFFFF;
+		cursor: pointer;
+		font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+		font-weight: 700;
+		opacity: 1;
+		outline: 0 solid transparent;
+		padding: 3px 15px;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		width: fit-content;
+		word-break: break-word;
+		border: 0;
 	}
 </style>
